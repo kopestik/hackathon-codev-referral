@@ -1,18 +1,13 @@
 import { Tab, Tabs } from "@nextui-org/tabs";
-import { TotalNumberWidget } from "./components/TotalNumberWidget";
 import { ReferralTab } from "./tabs/ReferralsTab";
 import { RewardsTab } from "./tabs/RewardsTab";
-import { DollarSign, Gem, UsersRound } from "lucide-react";
+import { WidgetContainer } from "./components/TotalNumberWidget/WidgetContainer";
 
 function App() {
   return (
-    <>
-      <div className="flex space-x-4 m-5">
-        <TotalNumberWidget icon={<Gem size="3em" />} label="Total Points" value="999" />
-        <TotalNumberWidget icon={<DollarSign size="3em" />} label="Total Cash Incentives" value="999" />
-        <TotalNumberWidget icon={<UsersRound size="3em" />} label="Total Referrals" value="999" />
-        </div>
+    <div className="container mx-auto max-w-7xl px-6 flex-grow text-foreground">
       <div className="flex w-full flex-col">
+        <WidgetContainer />
         <Tabs aria-label="Options">
           <Tab key="referrals" title="Referrals">
             <ReferralTab />
@@ -22,7 +17,7 @@ function App() {
           </Tab>
         </Tabs>
       </div>
-    </>
+    </div>
   );
 }
 
