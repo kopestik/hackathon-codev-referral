@@ -14,7 +14,7 @@ export const WidgetContainer = () => {
         <TotalNumberWidget
           icon={<DollarSign size="3em" />}
           label="Total Cash Incentives"
-          value="999"
+          value="555"
         />
         <TotalNumberWidget
           icon={<UsersRound size="3em" />}
