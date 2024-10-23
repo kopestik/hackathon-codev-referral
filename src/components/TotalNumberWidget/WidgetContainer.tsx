@@ -1,5 +1,4 @@
 import { Gem, DollarSign, UsersRound } from "lucide-react";
-import { ReactNode } from "react";
 import { TotalNumberWidget } from "./TotalNumberWidget";
 
 export const WidgetContainer = () => {
@@ -25,9 +24,3 @@ export const WidgetContainer = () => {
     </>
   );
 };
-
-interface Props {
-  icon?: ReactNode;
-  label: string;
-  value: string | number;
-}
