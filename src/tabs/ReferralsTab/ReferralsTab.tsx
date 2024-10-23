@@ -1,3 +1,7 @@
+import { ReferralsTable } from "../../components/ReferralsTable";
+
 export const ReferralTab = () => {
-  return <div>Referrals</div>;
+  return <div>
+    <ReferralsTable />
+  </div>;
 };
