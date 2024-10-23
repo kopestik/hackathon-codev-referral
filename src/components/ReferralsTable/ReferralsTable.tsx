@@ -4,7 +4,6 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  getKeyValue,
   Table,
 } from "@nextui-org/react";
 import { Gem } from "lucide-react";
