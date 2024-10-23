@@ -1,9 +1,10 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
 import { NextUIProvider } from "@nextui-org/react";
 import { Toaster } from "sonner";
+import App from "./App.tsx";
+import "@fontsource-variable/inter";
+import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>

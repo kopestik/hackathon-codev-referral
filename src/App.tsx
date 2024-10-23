@@ -5,7 +5,7 @@ import { RewardsTab } from "./tabs/RewardsTab";
 
 function App() {
   return (
-    <>
+    <div className="container mx-auto max-w-7xl px-6 flex-grow text-foreground">
       <TotalNumberWidget />
       <TotalNumberWidget />
       <TotalNumberWidget />
@@ -19,7 +19,7 @@ function App() {
           </Tab>
         </Tabs>
       </div>
-    </>
+    </div>
   );
 }
 
