@@ -1,12 +1,6 @@
 import { Card, CardBody } from "@nextui-org/react";
 import { ReactNode } from "react";
 
-interface Props {
-  icon?: ReactNode 
-  label: string
-  value: string|number
-}
-
 export const TotalNumberWidget = ({ icon, label, value }: Props) => {
   return (
     <Card className="max-w-64 py-3 flex-1">
@@ -26,3 +20,9 @@ export const TotalNumberWidget = ({ icon, label, value }: Props) => {
     </Card>
   );
 };
+
+interface Props {
+  icon?: ReactNode 
+  label: string
+  value: string|number
+}
