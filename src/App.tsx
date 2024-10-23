@@ -1,15 +1,13 @@
 import { Tab, Tabs } from "@nextui-org/tabs";
-import { TotalNumberWidget } from "./components/TotalNumberWidget";
 import { ReferralTab } from "./tabs/ReferralsTab";
 import { RewardsTab } from "./tabs/RewardsTab";
+import { WidgetContainer } from "./components/TotalNumberWidget/WidgetContainer";
 
 function App() {
   return (
     <div className="container mx-auto max-w-7xl px-6 flex-grow text-foreground">
-      <TotalNumberWidget />
-      <TotalNumberWidget />
-      <TotalNumberWidget />
       <div className="flex w-full flex-col">
+        <WidgetContainer />
         <Tabs aria-label="Options">
           <Tab key="referrals" title="Referrals">
             <ReferralTab />
