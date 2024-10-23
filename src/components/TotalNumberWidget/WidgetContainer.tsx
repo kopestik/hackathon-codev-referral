@@ -19,7 +19,7 @@ export const WidgetContainer = () => {
         <TotalNumberWidget
           icon={<UsersRound size="3em" />}
           label="Total Referrals"
-          value="999"
+          value="777"
         />
       </div>
     </>
