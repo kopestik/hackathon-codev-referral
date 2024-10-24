@@ -6,7 +6,6 @@ import { PointsLeaderboard } from "./components/PointsLeaderboard";
 import { ClaimHistory } from "./components/ClaimHistory";
 
 function App() {
-
   return (
     <div className="container mx-auto max-w-7xl px-6 flex-grow text-foreground py-12">
       <div className="flex w-full flex-col">
