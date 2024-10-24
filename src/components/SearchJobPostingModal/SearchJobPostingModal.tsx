@@ -113,15 +113,15 @@ const JobPosting = ({
 interface Props {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
-  onClick: (id: string | number) => void;
+  onClick: (id: number) => void;
 }
 
 interface JobPostingProps {
-  id: string | number;
+  id: number;
   name: string;
   points: number;
   isUrgent: boolean;
-  onClick: (id: string | number) => void;
+  onClick: (id: number) => void;
 }
 
 interface Tier {

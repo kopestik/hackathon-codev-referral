@@ -9,7 +9,7 @@ export const ReferralTab = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="flex flex-col gap-4">
-      <ReferralLinkWidget referrerId="1c34fc" />
+      <ReferralLinkWidget />
       <div>
         <Button
           onClick={() => {
