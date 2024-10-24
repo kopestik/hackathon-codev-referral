@@ -85,7 +85,12 @@ export const PointsLeaderboard = () => {
           </div>
         </div>
         <div className="w-[500px]">
-          <Table isStriped fullWidth shadow="sm">
+          <Table
+            isStriped
+            fullWidth
+            shadow="sm"
+            aria-label="Points Leaderboard"
+          >
             <TableHeader columns={columns as unknown as Column[]}>
               {(column) => (
                 <TableColumn key={column.key}>{column.label}</TableColumn>

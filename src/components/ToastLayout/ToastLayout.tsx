@@ -6,7 +6,7 @@ export const ToastLayout = ({
 }: ToastLayoutProps) => {
   return (
     <div
-      className="w-full flex items-stretch gap-2 bg-white border border-foreground-200 shadow-sm rounded-md inter"
+      className="w-full flex items-stretch gap-2 bg-background text-foreground border border-foreground-200 dark:border-gray-800 shadow-sm rounded-md inter overflow-hidden"
       onClick={onClick}
     >
       <div className="py-3 pl-3 pr-1 flex items-center">
