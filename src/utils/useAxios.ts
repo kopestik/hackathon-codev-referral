@@ -18,7 +18,6 @@ const useAxios = (endpoint: string, method = 'GET', body = null) => {
           response = await axiosInstance.post(endpoint, body);
         }
         
-        // Add other methods as needed (PUT, DELETE, etc.)
         setData(response!.data);
       } catch (err: any) {
         console.log(err)
