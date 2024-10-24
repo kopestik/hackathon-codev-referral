@@ -1,7 +1,12 @@
 import { Button, Card, CardBody, CardFooter } from "@nextui-org/react";
 import { Gem, ShoppingCart } from "lucide-react";
 
-export const RewardItem = ({ name, points, image }: RewardItemProps) => {
+export const RewardItem = ({
+  name,
+  points,
+  image,
+  action,
+}: RewardItemProps) => {
   return (
     <Card className="max-w-64 bg-gray-100 rounded-3xl">
       <CardBody className="items-center">
@@ -30,6 +35,7 @@ export const RewardItem = ({ name, points, image }: RewardItemProps) => {
           radius="full"
           size="lg"
           className="bg-foreground text-white focus:outline-black "
+          onClick={() => action()}
         >
           <ShoppingCart size={18} />
         </Button>
@@ -38,8 +44,9 @@ export const RewardItem = ({ name, points, image }: RewardItemProps) => {
   );
 };
 
-interface RewardItemProps {
+export interface RewardItemProps {
   name: string;
-  points: number|string;
+  points: number | string;
   image: string;
+  action: () => void;
 }
