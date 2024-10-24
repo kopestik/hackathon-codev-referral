@@ -5,7 +5,7 @@ import { WidgetContainer } from "./components/TotalNumberWidget/WidgetContainer"
 
 function App() {
   return (
-    <div className="container mx-auto max-w-7xl px-6 flex-grow text-foreground">
+    <div className="container mx-auto max-w-7xl px-6 flex-grow text-foreground py-12">
       <div className="flex w-full flex-col">
         <WidgetContainer />
         <Tabs aria-label="Options">
