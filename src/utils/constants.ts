@@ -1,0 +1,1 @@
+export const EMAIL = encodeURIComponent("luzvimindab@codev.com")
