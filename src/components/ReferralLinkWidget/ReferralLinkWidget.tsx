@@ -30,7 +30,7 @@ export const ReferralLinkWidget = ({ referrerId }: ReferralLinkWidgetProps) => {
           />
           <p className="px-2 text-sm mt-2">
             <button
-              className="underline text-gray-600"
+              className="underline text-gray-600 dark:text-[#b1aaa0]"
               onClick={jobId ? onRevertToGenericRefer : onSpecificRefer}
             >
               {jobId

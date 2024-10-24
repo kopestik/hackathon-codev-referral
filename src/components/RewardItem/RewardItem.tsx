@@ -8,9 +8,9 @@ export const RewardItem = ({
   action,
 }: RewardItemProps) => {
   return (
-    <Card className="max-w-64 bg-gray-100 rounded-3xl">
-      <CardBody className="items-center">
-        <div className="max-w-56 h-44 w-full overflow-hidden">
+    <Card className="max-w-64 bg-content2 rounded-3xl">
+      <CardBody className="items-center p-2">
+        <div className="h-44 w-full overflow-hidden">
           <img
             className="w-full h-full object-cover rounded-3xl"
             src={image}
@@ -23,18 +23,18 @@ export const RewardItem = ({
       <CardFooter className="flex items-center justify-between px-4 pt-1 pb-4">
         <div>
           <p>
-            <span className="font-semibold">{name}</span>
+            <span className="font-semibold text-sm">{name}</span>
           </p>
-          <div className="text-gray-700">
-            <Gem className="inline -mt-1.5 mr-1" size={16} />
-            <span className="font-bold text-xl">{points}</span>
+          <div className="text-content3-foreground flex items-center gap-1">
+            <Gem className="inline" size={14} />
+            <span className="font-bold text-sm">{points}</span>
           </div>
         </div>
         <Button
           isIconOnly
           radius="full"
           size="lg"
-          className="bg-foreground text-white focus:outline-black "
+          className="bg-black text-white focus:outline-black dark:bg-content1"
           onClick={() => action()}
         >
           <ShoppingCart size={18} />

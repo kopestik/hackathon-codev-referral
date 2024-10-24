@@ -11,13 +11,13 @@ import { RewardItem } from "./RewardItem";
 import { useState } from "react";
 
 export const RewardsContainer = () => {
-  const [isConfirmationOpen, setIsConfirmationOpen] = useState<null | any>(
+  const [isConfirmationOpen, setIsConfirmationOpen] = useState<null | unknown>(
     null
   );
 
   return (
     <>
-      <div className="grid grid-cols-3 gap-5 mx-20">
+      <div className="grid grid-cols-4 gap-5 gap-y-12">
         {items.map(({ name, points, image }) => (
           <RewardItem
             name={name}
@@ -31,7 +31,7 @@ export const RewardsContainer = () => {
       <Divider className="my-8" />
 
       <span className="text-2xl">Conversion</span>
-      <div className="grid grid-cols-3 gap-5 mx-20 mt-5">
+      <div className="grid grid-cols-4 gap-5 mt-5">
         {conversion.map(({ name, points, image }) => (
           <RewardItem
             name={name}
