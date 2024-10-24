@@ -1,3 +1,5 @@
+import { RewardsContainer } from "../../components/RewardItem/RewardsContainer";
+
 export const RewardsTab = () => {
-  return <div>Rewards Tab</div>;
+  return <RewardsContainer />;
 };
