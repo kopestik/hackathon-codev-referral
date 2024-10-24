@@ -18,11 +18,11 @@ export const ReferralsTable = () => {
   const renderCell = useCallback(
     (referral: Referral, columnKey: keyof Referral) => {
       switch (columnKey) {
-        case "name":
+        case "applicant":
           return referral.applicant.name;
-        case "date":
+        case "dateReferred":
           return new Intl.DateTimeFormat("en-US").format(new Date());
-        case "stage":
+        case "candidateStatus":
           return referral.candidateStatus.name;
         case "cashIncentive":
           return <span>${referral.cashIncentive}</span>;
@@ -71,15 +71,15 @@ export const ReferralsTable = () => {
 
 const columns: ReferralColumn[] = [
   {
-    key: "name",
+    key: "applicant",
     label: "NAME",
   },
   {
-    key: "date",
+    key: "dateReferred",
     label: "Date Referred",
   },
   {
-    key: "stage",
+    key: "candidateStatus",
     label: "Stage",
   },
   {
@@ -92,21 +92,49 @@ const columns: ReferralColumn[] = [
   },
 ];
 
-type Referral = any;
-// {
-//   cashIncentive: string;
-//   points: string;
-//   applicant: {
-//     id: number
-//     name: string;
-//     email: string;
-//   };
-//   candidateStatus: {
-//     name: string;
-//   };
-// };
-
 type ReferralColumn = {
   key: string;
   label: string;
 };
+
+interface Applicant {
+  id: number;
+  name: string;
+  email: string;
+}
+
+interface Referrer {
+  email: string;
+  name: string;
+}
+
+interface Tier {
+  id: number;
+  name: string;
+}
+
+interface JobPosting {
+  id: number;
+  number: string;
+  title: string;
+  isUrgent: boolean;
+  tier: Tier;
+  link: string | null;
+  maxPoints: number;
+  maxCashIncentive: number;
+}
+
+interface CandidateStatus {
+  id: number;
+  name: string;
+}
+
+interface Referral {
+  applicant: Applicant;
+  dateReferred: string;
+  referrer: Referrer;
+  jobPosting: JobPosting;
+  candidateStatus: CandidateStatus;
+  points: number;
+  cashIncentive: number;
+}
