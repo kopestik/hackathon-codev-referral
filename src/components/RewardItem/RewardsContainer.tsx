@@ -6,41 +6,48 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Spinner,
 } from "@nextui-org/react";
 import { RewardItem } from "./RewardItem";
 import { useState } from "react";
+import useAxios from "../../utils/useAxios";
 
 export const RewardsContainer = () => {
+  const { data, loading } = useAxios("/referrals/rewards");
   const [isConfirmationOpen, setIsConfirmationOpen] = useState<null | unknown>(
     null
   );
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-5 gap-y-12">
-        {items.map(({ name, points, image }) => (
-          <RewardItem
-            name={name}
-            points={points}
-            image={image}
-            action={() => setIsConfirmationOpen({ name, points })}
-          />
-        ))}
-      </div>
-
-      <Divider className="my-8" />
-
-      <span className="text-2xl">Conversion</span>
-      <div className="grid grid-cols-4 gap-5 mt-5">
-        {conversion.map(({ name, points, image }) => (
-          <RewardItem
-            name={name}
-            points={points}
-            image={image}
-            action={() => setIsConfirmationOpen({ name, points })}
-          />
-        ))}
-      </div>
+      {data && !loading ? (
+        <>
+          <div className="grid grid-cols-4 gap-5 gap-y-12">
+            {data.map(({ name, points, imageUrl }: Item) => (
+              <RewardItem
+                name={name}
+                points={points}
+                image={imageUrl}
+                action={() => setIsConfirmationOpen({ name, points })}
+              />
+            ))}
+          </div>
+          <Divider className="my-8" />
+          <span className="text-2xl">Conversion</span>
+          <div className="grid grid-cols-4 gap-5 mt-5">
+            {conversion.map(({ name, points, image }) => (
+              <RewardItem
+                name={name}
+                points={points}
+                image={image}
+                action={() => setIsConfirmationOpen({ name, points })}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="flex justify-center"><Spinner label="Loading..." /></div>
+      )}
 
       <ConfirmationModal
         isOpen={Boolean(isConfirmationOpen)}
@@ -80,58 +87,17 @@ const ConfirmationModal = ({
   );
 };
 
+type Item = {
+  id: number;
+  name: string;
+  description: string;
+  points: number;
+  imageUrl: string;
+};
 interface confirmationModalProps {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
 }
-
-const items = [
-  {
-    name: "Playstation 5 Disc",
-    points: "1,000",
-    image: `https://picsum.photos/id/1/200/300`,
-  },
-  {
-    name: "Steam Deck Oled",
-    points: "1,500",
-    image: `https://picsum.photos/id/2/200/300`,
-  },
-  {
-    name: "Tesla Cybertruck LTD",
-    points: "50,000",
-    image: `https://picsum.photos/id/3/200/300`,
-  },
-  {
-    name: "Surly Midnight Special",
-    points: "2,500",
-    image: `https://picsum.photos/id/4/200/300`,
-  },
-  {
-    name: "Specialized Chisel HT",
-    points: "3,000",
-    image: `https://picsum.photos/id/5/200/300`,
-  },
-  {
-    name: "Nike Vaporfly 3 LE",
-    points: "500",
-    image: `https://picsum.photos/id/6/200/300`,
-  },
-  {
-    name: "Macbook Pro 16 M3",
-    points: "3,000",
-    image: `https://picsum.photos/id/7/200/300`,
-  },
-  {
-    name: "House & Lot 500sqm",
-    points: "35,000",
-    image: `https://picsum.photos/id/8/200/300`,
-  },
-  {
-    name: "Trip to Japan 3D",
-    points: "10,000",
-    image: `https://picsum.photos/id/9/200/300`,
-  },
-];
 
 const conversion = [
   {

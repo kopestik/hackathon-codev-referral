@@ -5,44 +5,56 @@ import {
   TableRow,
   TableCell,
   Table,
+  Spinner,
 } from "@nextui-org/react";
 import { Gem } from "lucide-react";
 import { useCallback } from "react";
+import useAxios from "../../utils/useAxios";
+import { EMAIL } from "../../utils/constants";
 
 export const ReferralsTable = () => {
+  const { data, loading } = useAxios("/referrals/" + EMAIL);
+
   const renderCell = useCallback(
     (referral: Referral, columnKey: keyof Referral) => {
-      const cellValue = referral[columnKey];
-
       switch (columnKey) {
+        case "applicant":
+          return referral.applicant.name;
+        case "dateReferred":
+          return new Intl.DateTimeFormat("en-US").format(new Date(referral.dateReferred));
+        case "candidateStatus":
+          return referral.candidateStatus.name;
         case "cashIncentive":
-          return <span>${cellValue}</span>;
+          return <span>${referral.cashIncentive}</span>;
         case "points":
           return (
             <>
               <Gem className="inline -mt-1 mr-1" size={16} />
-              <span className="text-lg">{cellValue}/</span>
-              <span className="text-xs">500</span>
+              <span className="text-lg">{referral.points}/</span>
+              <span className="text-xs">{referral.jobPosting.maxPoints}</span>
             </>
           );
         default:
-          return cellValue;
+          return "-";
       }
     },
     []
   );
 
   return (
-    <div>
-      <Table className="mb-6" aria-label="My Referrals Table">
+    <>
+    {data && !loading ? (<Table aria-label="My Referrals Table">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
-        <TableBody emptyContent={"No referrals to display."} items={rows}>
-          {(item) => (
-            <TableRow key={item.key}>
+        <TableBody
+          emptyContent={"No referrals to display."}
+          items={data}
+        >
+          {(item: Referral) => (
+            <TableRow key={item.applicant.id}>
               {(columnKey) => (
                 <TableCell>
                   {renderCell(item, columnKey as keyof Referral)}
@@ -51,57 +63,23 @@ export const ReferralsTable = () => {
             </TableRow>
           )}
         </TableBody>
-      </Table>
-    </div>
+      </Table>) : (<Spinner label="Loading..." />)}
+      
+    </>
   );
 };
 
-const rows: Referral[] = [
-  {
-    key: "1",
-    name: "Tony Reichert",
-    date: "07/06/2024",
-    stage: "Interview",
-    cashIncentive: "999",
-    points: "300",
-  },
-  {
-    key: "2",
-    name: "Zoey Lang",
-    date: "07/06/2024",
-    stage: "Initial Interview",
-    cashIncentive: "999",
-    points: "300",
-  },
-  {
-    key: "3",
-    name: "Jane Fisher",
-    date: "07/06/2024",
-    stage: "Examination",
-    cashIncentive: "999",
-    points: "300",
-  },
-  {
-    key: "4",
-    name: "William Howard",
-    date: "07/06/2024",
-    stage: "Final Interview",
-    cashIncentive: "999",
-    points: "300",
-  },
-];
-
 const columns: ReferralColumn[] = [
   {
-    key: "name",
+    key: "applicant",
     label: "NAME",
   },
   {
-    key: "date",
+    key: "dateReferred",
     label: "Date Referred",
   },
   {
-    key: "stage",
+    key: "candidateStatus",
     label: "Stage",
   },
   {
@@ -114,16 +92,49 @@ const columns: ReferralColumn[] = [
   },
 ];
 
-type Referral = {
-  key: string;
-  name: string;
-  date: string;
-  stage: string;
-  cashIncentive: string;
-  points: string;
-};
-
 type ReferralColumn = {
   key: string;
   label: string;
 };
+
+interface Applicant {
+  id: number;
+  name: string;
+  email: string;
+}
+
+interface Referrer {
+  email: string;
+  name: string;
+}
+
+interface Tier {
+  id: number;
+  name: string;
+}
+
+interface JobPosting {
+  id: number;
+  number: string;
+  title: string;
+  isUrgent: boolean;
+  tier: Tier;
+  link: string | null;
+  maxPoints: number;
+  maxCashIncentive: number;
+}
+
+interface CandidateStatus {
+  id: number;
+  name: string;
+}
+
+interface Referral {
+  applicant: Applicant;
+  dateReferred: string;
+  referrer: Referrer;
+  jobPosting: JobPosting;
+  candidateStatus: CandidateStatus;
+  points: number;
+  cashIncentive: number;
+}

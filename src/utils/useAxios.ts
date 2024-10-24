@@ -1,4 +1,3 @@
-// src/hooks/useAxios.js
 import { useState, useEffect } from 'react';
 import axiosInstance from './axios';
 
