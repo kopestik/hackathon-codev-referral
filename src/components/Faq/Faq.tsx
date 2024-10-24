@@ -8,7 +8,7 @@ export const Faq = () => {
         <span className="text-2xl font-bold">FAQs</span>
       </CardHeader>
       <CardBody>
-        <Accordion itemClasses={{ content: "text-gray-700"}} selectionMode="multiple">
+        <Accordion itemClasses={{ content: "text-gray-700", title: "text-md"}} selectionMode="multiple">
           {FAQS.map((faq, index) => (
             <AccordionItem
               key={index + 1}
