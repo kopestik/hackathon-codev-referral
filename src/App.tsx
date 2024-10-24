@@ -5,6 +5,7 @@ import { WidgetContainer } from "./components/TotalNumberWidget/WidgetContainer"
 import { SearchJobPostingModal } from "./components/SearchJobPostingModal";
 import { useState } from "react";
 import { Button } from "@nextui-org/react";
+import { PointsLeaderboard } from "./components/PointsLeaderboard";
 
 function App() {
   const [showSearchModal, setShowSearchModal] = useState(false);
@@ -13,16 +14,29 @@ function App() {
     <div className="container mx-auto max-w-7xl px-6 flex-grow text-foreground py-12">
       <div className="flex w-full flex-col">
         <WidgetContainer />
-        <Button className="w-56" color="primary" onClick={() => setShowSearchModal(true)}  >
+        <Button
+          className="w-56"
+          color="primary"
+          onClick={() => setShowSearchModal(true)}
+        >
           Open Search Modal
         </Button>
-        <SearchJobPostingModal isOpen={showSearchModal} onOpenChange={setShowSearchModal} />
+        <SearchJobPostingModal
+          isOpen={showSearchModal}
+          onOpenChange={setShowSearchModal}
+        />
         <Tabs aria-label="Options">
           <Tab key="referrals" title="Referrals">
             <ReferralTab />
           </Tab>
           <Tab key="rewards" title="Rewards">
             <RewardsTab />
+          </Tab>
+          <Tab key="history" title="Claim History">
+            Claim History
+          </Tab>
+          <Tab key="leaderboard" title="Points Leaderboard">
+            <PointsLeaderboard />
           </Tab>
         </Tabs>
       </div>
