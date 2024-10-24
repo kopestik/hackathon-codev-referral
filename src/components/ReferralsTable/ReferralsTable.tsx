@@ -21,7 +21,7 @@ export const ReferralsTable = () => {
         case "applicant":
           return referral.applicant.name;
         case "dateReferred":
-          return new Intl.DateTimeFormat("en-US").format(new Date());
+          return new Intl.DateTimeFormat("en-US").format(new Date(referral.dateReferred));
         case "candidateStatus":
           return referral.candidateStatus.name;
         case "cashIncentive":

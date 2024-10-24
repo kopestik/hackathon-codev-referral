@@ -5,100 +5,92 @@ import {
   TableRow,
   TableCell,
   Table,
+  Spinner,
 } from "@nextui-org/react";
 import { Gem } from "lucide-react";
 import { useCallback } from "react";
+import useAxios from "../../utils/useAxios";
+import { EMAIL } from "../../utils/constants";
 
 export const ClaimHistory = () => {
+  const { data, loading } = useAxios("/referrals/rewards/claimed/" + EMAIL);
+
   const renderCell = useCallback(
-    (referral: Claims, columnKey: keyof Claims) => {
-      const cellValue = referral[columnKey];
+    (referral: RewardEntry, columnKey: keyof RewardEntry) => {
 
       switch (columnKey) {
-        case "points":
-          return (
-            <>
-              <Gem className="inline -mt-1 mr-1" size={16} />
-              <span>{cellValue}</span>
-            </>
-          );
+        case "reward":
+          return referral.reward.name;
+        case "created":
+          return new Intl.DateTimeFormat("en-US").format(new Date(referral.created)); 
+        case "id":
+          return <>
+            <Gem className="inline -mt-1 mr-1" size={16} />
+            <span>{referral.reward.points}</span>
+          </>
         default:
-          return cellValue;
+          return "-";
       }
     },
     []
   );
 
   return (
-    <Table isStriped aria-label="Claims History Table">
+    <>{data && !loading ? (<Table isStriped aria-label="Claims History Table">
       <TableHeader columns={columns}>
-        {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
+        {(column) => <TableColumn key={column.key} align={column.key === "points" ? "center" : "start"}>{column.label}</TableColumn>}
       </TableHeader>
-      <TableBody emptyContent={"No record to display."} items={rows}>
-        {(item) => (
-          <TableRow key={item.key}>
+      <TableBody emptyContent={"No record to display."} items={data}>
+        {(item:RewardEntry) => (
+          <TableRow key={item.id}>
             {(columnKey) => (
               <TableCell>
-                {renderCell(item, columnKey as keyof Claims)}
+                {renderCell(item, columnKey as keyof RewardEntry)}
               </TableCell>
             )}
           </TableRow>
         )}
       </TableBody>
-    </Table>
+    </Table>) : (<div className="flex justify-center"><Spinner label="Loading..." /></div>)}</>
   );
 };
 
-const rows: Claims[] = [
-  {
-    key: "1",
-    date: "07/06/2024",
-    item: "PlayStation 5 Disc",
-    points: "1000",
-  },
-  {
-    key: "2",
-    date: "07/06/2024",
-    item: "Steam Deck OLED 256gb",
-    points: "1500",
-  },
-  {
-    key: "3",
-    date: "07/06/2024",
-    item: "House & Lot",
-    points: "9999",
-  },
-  {
-    key: "4",
-    date: "07/06/2024",
-    item: "Tesla Cybertruck Dual Motor",
-    points: "999",
-  },
-];
-
 const columns: ClaimsColumn[] = [
   {
-    key: "date",
-    label: "Date Referred",
-  },
-  {
-    key: "item",
+    key: "reward",
     label: "Item",
   },
   {
-    key: "points",
+    key: "created",
+    label: "Date Claimed",
+  },
+  {
+    key: "id",
     label: "Points Consumed",
   },
 ];
-
-type Claims = {
-  key: string;
-  date: string;
-  item: string;
-  points: string;
-};
 
 type ClaimsColumn = {
   key: string;
   label: string;
 };
+
+interface User {
+  email: string;
+  name: string;
+}
+
+interface Reward {
+  id: number;
+  name: string;
+  description: string | null;
+  points: number;
+  imageUrl: string;
+}
+
+interface RewardEntry {
+  id: number;
+  user: User;
+  reward: Reward;
+  created: string;
+}
