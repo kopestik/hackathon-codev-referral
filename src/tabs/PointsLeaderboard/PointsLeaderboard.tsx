@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Spinner,
   Table,
   TableBody,
   TableCell,
@@ -10,8 +11,9 @@ import {
 } from "@nextui-org/react";
 import { Gem } from "lucide-react";
 import { useCallback } from "react";
+import useAxios from "../../utils/useAxios";
 
-const columns = [
+const columns: Column[] = [
   {
     key: "rank",
     label: "Rank",
@@ -24,63 +26,49 @@ const columns = [
     key: "points",
     label: "Points",
   },
-] as const;
-
-const rows: User[] = [
-  {
-    key: "1",
-    rank: 2,
-    name: "Jane Doe",
-    points: 400,
-  },
-  {
-    key: "2",
-    rank: 3,
-    name: "Jane Doe",
-    points: 400,
-  },
-  {
-    key: "3",
-    rank: 4,
-    name: "Jane Doe",
-    points: 400,
-  },
 ];
 
 export const PointsLeaderboard = () => {
-  const renderCell = useCallback((user: User, columnKey: ColumnKey) => {
-    const cellValue = user[columnKey];
+  const { data, loading } = useAxios("/Referrals/leaderboard");
+  const users = data as User[];
+  const first = users?.find((u) => u.rank === 1);
+  const rest = users?.filter((u) => u.rank !== 1);
 
+  const renderCell = useCallback((user: User, columnKey: keyof User) => {
     switch (columnKey) {
       case "rank":
-        return "#" + cellValue;
+        return "#" + user.rank;
       case "name":
         return (
-          <User name={cellValue} avatarProps={{ size: "sm" }}>
-            {cellValue}
+          <User name={user.name} avatarProps={{ size: "sm" }}>
+            {user.name}
           </User>
         );
       case "points":
         return (
           <div className="flex items-center gap-1">
-            <Gem size={12} /> <span className="text-sm">{cellValue}</span>
+            <Gem size={12} /> <span className="text-sm">{user.points}</span>
           </div>
         );
       default:
-        return cellValue;
+        return "-";
     }
   }, []);
 
-  return (
+  return loading ? (
+    <div className="flex justify-center">
+      <Spinner label="Loading..." />
+    </div>
+  ) : (
     <div>
       <div className="flex items-center flex-col">
         <Avatar isBordered size="lg" color="success" />
         <div className="font-semibold text-center mt-4 flex flex-col gap-2 mb-6">
           <p className="text-3xl">#1</p>
           <div className="flex items-center gap-1">
-            <span>John Doe</span>
+            <span>{first?.name}</span>
             {"("}
-            <Gem size={12} /> <span className="text-sm">999</span>
+            <Gem size={12} /> <span className="text-sm">{first?.points}</span>
             {")"}
           </div>
         </div>
@@ -91,17 +79,17 @@ export const PointsLeaderboard = () => {
             shadow="sm"
             aria-label="Points Leaderboard"
           >
-            <TableHeader columns={columns as unknown as Column[]}>
+            <TableHeader columns={columns}>
               {(column) => (
                 <TableColumn key={column.key}>{column.label}</TableColumn>
               )}
             </TableHeader>
-            <TableBody items={rows}>
+            <TableBody items={rest}>
               {(item) => (
-                <TableRow>
+                <TableRow key={item.rank}>
                   {(columnKey) => (
                     <TableCell>
-                      {renderCell(item, columnKey as ColumnKey)}
+                      {renderCell(item, columnKey as keyof User)}
                     </TableCell>
                   )}
                 </TableRow>
@@ -115,7 +103,6 @@ export const PointsLeaderboard = () => {
 };
 
 interface User {
-  key: React.Key;
   rank: number;
   name: string;
   points: number;
@@ -125,5 +112,3 @@ interface Column {
   key: React.Key;
   label: string;
 }
-
-type ColumnKey = (typeof columns)[number]["key"];
