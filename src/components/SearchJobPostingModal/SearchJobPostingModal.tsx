@@ -47,7 +47,7 @@ export const SearchJobPostingModal = ({ isOpen, onOpenChange }: Props) => {
 
 const UrgentJobPosting = ({ jobPosting }: { jobPosting: string }) => {
   return (
-    <div className="flex items-center gap-2 mb-1 hover:bg-default-100 px-4 py-3 rounded-lg cursor-pointer">
+    <div className="flex items-center gap-2 mb-1 hover:bg-default-100 pl-2 pr-4 py-3 rounded-lg cursor-pointer">
       <div>
         <Flame size={20} fill="currentColor" className="-mt-1 text-red-500" />
       </div>
