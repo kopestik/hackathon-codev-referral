@@ -20,12 +20,12 @@ export const RewardItem = ({
           />
         </div>
       </CardBody>
-      <CardFooter className="flex items-center justify-between px-4 pt-1 pb-4">
+      <CardFooter className="flex items-center justify-between px-4 pt-1 pb-4 dark:text-[#dddad5]">
         <div>
           <p>
-            <span className="font-semibold text-sm">{name}</span>
+            <span className="font-semibold text-sm line-clamp-2">{name}</span>
           </p>
-          <div className="text-content3-foreground flex items-center gap-1">
+          <div className="text-content3-foreground dark:text-[#dddad5] flex items-center gap-1">
             <Gem className="inline" size={14} />
             <span className="font-bold text-sm">{points}</span>
           </div>

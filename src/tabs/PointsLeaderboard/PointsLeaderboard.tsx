@@ -75,7 +75,7 @@ export const PointsLeaderboard = () => {
     <div>
       <div className="flex items-center flex-col">
         <Avatar isBordered size="lg" color="success" />
-        <div className="font-semibold text-center mt-4 flex flex-col gap-2 mb-6">
+        <div className="font-semibold text-center mt-4 flex flex-col gap-2 mb-6 dark:text-[#dddad5]">
           <p className="text-3xl">#1</p>
           <div className="flex items-center gap-1">
             <span>John Doe</span>
@@ -95,7 +95,7 @@ export const PointsLeaderboard = () => {
               {(item) => (
                 <TableRow>
                   {(columnKey) => (
-                    <TableCell>
+                    <TableCell className="dark:text-[#dddad5]">
                       {renderCell(item, columnKey as ColumnKey)}
                     </TableCell>
                   )}
