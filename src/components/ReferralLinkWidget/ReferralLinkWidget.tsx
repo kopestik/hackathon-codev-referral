@@ -2,18 +2,36 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { InputWithCopyUrl } from "../InputWithCopyUrl";
 import { useState } from "react";
 import { SearchJobPostingModal } from "../SearchJobPostingModal";
+import { useUserContext } from "../../contexts/useUserContext";
+import axiosInstance from "../../utils/axios";
+import { EMAIL } from "../../utils/constants";
+import { toast } from "sonner";
 
-export const ReferralLinkWidget = ({ referrerId }: ReferralLinkWidgetProps) => {
+export const ReferralLinkWidget = () => {
+  const { referralLink: genericReferralLink } = useUserContext();
+  const [specificReferralLink, setSpecificReferralLink] = useState<string>();
   const [isSearchJpOpen, setIsSearchJpOpen] = useState(false);
-  const [jobId, setJobId] = useState<string | number>();
 
   const onSpecificRefer = () => {
     setIsSearchJpOpen(true);
   };
 
   const onRevertToGenericRefer = () => {
-    setJobId(undefined);
+    setSpecificReferralLink(undefined);
     setIsSearchJpOpen(false);
+  };
+
+  const onGenerateReferralLink = async (jobId: number) => {
+    try {
+      const { data } = await axiosInstance(`/JobPostings/${jobId}/${EMAIL}`);
+
+      setSpecificReferralLink(data.link);
+
+      setIsSearchJpOpen(false);
+    } catch (error) {
+      console.log(error);
+      toast("Something went wrong. See console.");
+    }
   };
 
   return (
@@ -24,16 +42,16 @@ export const ReferralLinkWidget = ({ referrerId }: ReferralLinkWidgetProps) => {
         </CardHeader>
         <CardBody className="pt-0">
           <InputWithCopyUrl
-            url={`icims-careers.link/apply/${
-              jobId || ""
-            }?referrerId=${referrerId}`}
+            url={specificReferralLink || genericReferralLink || "-"}
           />
           <p className="px-2 text-sm mt-2">
             <button
               className="underline text-gray-600 dark:text-[#b1aaa0]"
-              onClick={jobId ? onRevertToGenericRefer : onSpecificRefer}
+              onClick={
+                specificReferralLink ? onRevertToGenericRefer : onSpecificRefer
+              }
             >
-              {jobId
+              {specificReferralLink
                 ? "or copy generic referral link?"
                 : "or refer to a specific job posting?"}
             </button>
@@ -44,14 +62,9 @@ export const ReferralLinkWidget = ({ referrerId }: ReferralLinkWidgetProps) => {
         isOpen={isSearchJpOpen}
         onOpenChange={setIsSearchJpOpen}
         onClick={(id) => {
-          setJobId(id);
-          setIsSearchJpOpen(false);
+          onGenerateReferralLink(id);
         }}
       />
     </>
   );
 };
-
-interface ReferralLinkWidgetProps {
-  referrerId: string;
-}

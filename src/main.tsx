@@ -4,11 +4,14 @@ import { NextUIProvider } from "@nextui-org/react";
 import App from "./App.tsx";
 import "@fontsource-variable/inter";
 import "./index.css";
+import { UserContextProvider } from "./contexts/UserContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <NextUIProvider>
-      <App />
+      <UserContextProvider>
+        <App />
+      </UserContextProvider>
     </NextUIProvider>
   </StrictMode>
 );

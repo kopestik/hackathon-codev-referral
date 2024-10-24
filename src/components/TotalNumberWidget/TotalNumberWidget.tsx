@@ -7,11 +7,9 @@ export const TotalNumberWidget = ({ icon, label, value }: Props) => {
       <CardBody>
         <div className="flex space-x-2">
           <div className="w-2/5 items-center flex justify-center">
-            <div className="-mt-2">
-              {icon}
-            </div>
+            <div className="-mt-2">{icon}</div>
           </div>
-          <div className="w-3/4">
+          <div className="w-3/4 dark:text-[#dddad5]">
             <div className="text-sm">{label}</div>
             <div className="text-3xl font-black">{value}</div>
           </div>
@@ -22,7 +20,7 @@ export const TotalNumberWidget = ({ icon, label, value }: Props) => {
 };
 
 interface Props {
-  icon?: ReactNode 
-  label: string
-  value: string|number
+  icon?: ReactNode;
+  label: string;
+  value: string | number;
 }
