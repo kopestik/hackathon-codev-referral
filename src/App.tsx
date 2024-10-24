@@ -25,7 +25,7 @@ function App() {
           isOpen={showSearchModal}
           onOpenChange={setShowSearchModal}
         />
-        <Tabs aria-label="Options">
+        <Tabs aria-label="Options" className="justify-center mb-6" size="lg">
           <Tab key="referrals" title="Referrals">
             <ReferralTab />
           </Tab>
