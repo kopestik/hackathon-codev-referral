@@ -20,7 +20,11 @@ interface ApplyElements extends HTMLFormElement {
   readonly elements: ApplyFields;
 }
 
-export const ApplyModal = ({ isOpen, onOpenChange }: ApplyModalProps) => {
+export const ApplyModal = ({
+  isOpen,
+  onOpenChange,
+  afterApply,
+}: ApplyModalProps) => {
   const onSubmit = async (e: React.FormEvent<ApplyElements>) => {
     e.preventDefault();
     const { elements } = e.currentTarget;
@@ -42,6 +46,8 @@ export const ApplyModal = ({ isOpen, onOpenChange }: ApplyModalProps) => {
         form.reset();
         onOpenChange(false);
       }
+
+      afterApply();
     } catch (error) {
       console.log(error);
       toast("Something went wrong. Please try again.");
@@ -95,4 +101,5 @@ export const ApplyModal = ({ isOpen, onOpenChange }: ApplyModalProps) => {
 interface ApplyModalProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
+  afterApply: () => void;
 }
