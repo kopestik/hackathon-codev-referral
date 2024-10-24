@@ -9,12 +9,16 @@ import {
 import { Flame, Gem, Search } from "lucide-react";
 
 const jobPostings = [
-  "Senior React Developer",
-  "Junior Wordpress Developer",
-  "Marketing Associate",
+  { id: 1, name: "Senior React Developer", points: 300, isUrgent: true },
+  { id: 2, name: "Junior Wordpress Developer", points: 300, isUrgent: true },
+  { id: 3, name: "Marketing Associate", points: 300, isUrgent: true },
 ];
 
-export const SearchJobPostingModal = ({ isOpen, onOpenChange }: Props) => {
+export const SearchJobPostingModal = ({
+  isOpen,
+  onOpenChange,
+  onClick,
+}: Props) => {
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="lg">
       <ModalContent>
@@ -34,8 +38,14 @@ export const SearchJobPostingModal = ({ isOpen, onOpenChange }: Props) => {
             <Divider className="mt-1 px-4" />
 
             <div>
-              {jobPostings.map((i) => (
-                <UrgentJobPosting jobPosting={i} />
+              {jobPostings.map(({ id, name, isUrgent, points }) => (
+                <JobPosting
+                  id={id}
+                  name={name}
+                  isUrgent={isUrgent}
+                  points={points}
+                  onClick={onClick}
+                />
               ))}
             </div>
           </ModalBody>
@@ -45,17 +55,31 @@ export const SearchJobPostingModal = ({ isOpen, onOpenChange }: Props) => {
   );
 };
 
-const UrgentJobPosting = ({ jobPosting }: { jobPosting: string }) => {
-  return (
-    <div className="flex items-center gap-2 hover:bg-default-100 pl-2 pr-4 py-3 rounded-lg cursor-pointer">
-      <div>
-        <Flame size={20} fill="currentColor" className="-mt-1 text-red-500" />
-      </div>
-      <div className="flex items-center gap-2">{jobPosting}</div>
+const JobPosting = ({
+  id,
+  name,
+  isUrgent,
+  points,
+  onClick,
+}: JobPostingProps) => {
+  const onJobPostingSelect = () => {
+    onClick(id);
+  };
 
+  return (
+    <div
+      className="flex items-center gap-2 hover:bg-default-100 pl-2 pr-4 py-3 rounded-lg cursor-pointer"
+      onClick={onJobPostingSelect}
+    >
+      {isUrgent && (
+        <div>
+          <Flame size={20} fill="currentColor" className="-mt-1 text-red-500" />
+        </div>
+      )}
+      <div className="flex items-center gap-2">{name}</div>
       <div className="flex-1 items-center gap-2 text-right">
         <Gem className="inline -mt-1 mr-1" size={16} />
-        300
+        {points}
       </div>
     </div>
   );
@@ -64,4 +88,13 @@ const UrgentJobPosting = ({ jobPosting }: { jobPosting: string }) => {
 interface Props {
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
+  onClick: (id: string | number) => void;
+}
+
+interface JobPostingProps {
+  id: string | number;
+  name: string;
+  points: number;
+  isUrgent: boolean;
+  onClick: (id: string | number) => void;
 }
