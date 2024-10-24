@@ -6,8 +6,9 @@ import {
   TableCell,
   Table,
   Spinner,
+  Tooltip,
 } from "@nextui-org/react";
-import { Gem } from "lucide-react";
+import { CircleHelp, Gem } from "lucide-react";
 import { useCallback } from "react";
 import useAxios from "../../utils/useAxios";
 import { EMAIL } from "../../utils/constants";
@@ -21,11 +22,17 @@ export const ReferralsTable = () => {
         case "applicant":
           return referral.applicant.name;
         case "dateReferred":
-          return new Intl.DateTimeFormat("en-US").format(new Date(referral.dateReferred));
+          return new Intl.DateTimeFormat("en-US").format(
+            new Date(referral.dateReferred)
+          );
         case "candidateStatus":
           return referral.candidateStatus.name;
         case "cashIncentive":
-          return <span>${referral.cashIncentive}</span>;
+          return (
+            <span className="dark:text-[#dddad5]">
+              ${referral.cashIncentive}
+            </span>
+          );
         case "points":
           return (
             <>
@@ -43,28 +50,42 @@ export const ReferralsTable = () => {
 
   return (
     <>
-    {data && !loading ? (<Table aria-label="My Referrals Table">
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
-        </TableHeader>
-        <TableBody
-          emptyContent={"No referrals to display."}
-          items={data}
-        >
-          {(item: Referral) => (
-            <TableRow key={item.applicant.id}>
-              {(columnKey) => (
-                <TableCell>
-                  {renderCell(item, columnKey as keyof Referral)}
-                </TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>) : (<Spinner label="Loading..." />)}
-      
+      {data && !loading ? (
+        <Table aria-label="My Referrals Table" className="mb-6">
+          <TableHeader columns={columns}>
+            {(column) =>
+              column.key === "points" ? (
+                <TableColumn key={column.key}>
+                  <div className="flex items-center gap-1">
+                    {column.label}{" "}
+                    <Tooltip
+                      content="Points Redeemed / Maximum Possible Points"
+                      size="sm"
+                    >
+                      <CircleHelp size={14} />
+                    </Tooltip>
+                  </div>
+                </TableColumn>
+              ) : (
+                <TableColumn key={column.key}>{column.label}</TableColumn>
+              )
+            }
+          </TableHeader>
+          <TableBody emptyContent={"No referrals to display."} items={data}>
+            {(item: Referral) => (
+              <TableRow key={item.applicant.id}>
+                {(columnKey) => (
+                  <TableCell className="dark:text-[#dddad5]">
+                    {renderCell(item, columnKey as keyof Referral)}
+                  </TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      ) : (
+        <Spinner label="Loading..." />
+      )}
     </>
   );
 };

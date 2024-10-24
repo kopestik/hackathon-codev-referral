@@ -15,7 +15,10 @@ export const Faq = () => {
       </CardHeader>
       <CardBody>
         <Accordion
-          itemClasses={{ content: "text-gray-700", title: "text-sm" }}
+          itemClasses={{
+            content: "text-gray-700 text-sm dark:text-[#bdb7af]",
+            title: "text-sm dark:text-[#dddad5]",
+          }}
           selectionMode="multiple"
         >
           {FAQS.map((faq, index) => (
@@ -23,7 +26,6 @@ export const Faq = () => {
               key={index + 1}
               aria-label="Accordion 1"
               title={faq.title}
-              className="text-sm"
             >
               {faq.content}
             </AccordionItem>
