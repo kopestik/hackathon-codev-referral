@@ -27,7 +27,7 @@ export const ToastContainer = () => {
         ),
         { duration: 10000 }
       );
-    }, 30000);
+    }, 35000);
 
     return () => {
       clearInterval(id);
