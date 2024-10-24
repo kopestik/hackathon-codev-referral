@@ -16,12 +16,12 @@ export const ReferralsTable = () => {
 
       switch (columnKey) {
         case "cashIncentive":
-          return <span className="text-lg">${cellValue}</span>;
+          return <span>${cellValue}</span>;
         case "points":
           return (
             <>
-              <Gem className="inline -mt-1" size={16} />
-              <span className="text-lg">{" "}{cellValue}/</span><span className="text-xs">500</span>
+              <Gem className="inline -mt-1 mr-1" size={16} />
+              <span className="text-lg">{cellValue}/</span><span className="text-xs">500</span>
             </>
           );
         default:
