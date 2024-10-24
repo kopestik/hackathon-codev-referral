@@ -20,7 +20,14 @@ export const ReferralsTable = () => {
     (referral: Referral, columnKey: keyof Referral) => {
       switch (columnKey) {
         case "applicant":
-          return referral.applicant.name;
+          return (
+            <div>
+              <div>{referral.applicant.name}</div>
+              <div className="text-xs text-content4-foreground">
+                {referral.jobPosting.title}
+              </div>
+            </div>
+          );
         case "dateReferred":
           return new Intl.DateTimeFormat("en-US").format(
             new Date(referral.dateReferred)
