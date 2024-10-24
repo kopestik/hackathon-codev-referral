@@ -18,7 +18,7 @@ export const ReferralLinkWidget = ({ referrerId }: ReferralLinkWidgetProps) => {
 
   return (
     <>
-      <Card className="p-4">
+      <Card className="p-4 mb-6">
         <CardHeader className="pb-2">
           <span className="text-lg font-semibold">Your Referral Link</span>
         </CardHeader>

@@ -21,7 +21,8 @@ export const ReferralsTable = () => {
           return (
             <>
               <Gem className="inline -mt-1 mr-1" size={16} />
-              <span className="text-lg">{cellValue}/</span><span className="text-xs">500</span>
+              <span className="text-lg">{cellValue}/</span>
+              <span className="text-xs">500</span>
             </>
           );
         default:
@@ -32,22 +33,26 @@ export const ReferralsTable = () => {
   );
 
   return (
-    <Table aria-label="My Referrals Table">
-      <TableHeader columns={columns}>
-        {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
-      </TableHeader>
-      <TableBody emptyContent={"No referrals to display."} items={rows}>
-        {(item) => (
-          <TableRow key={item.key}>
-            {(columnKey) => (
-              <TableCell>
-                {renderCell(item, columnKey as keyof Referral)}
-              </TableCell>
-            )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+    <div>
+      <Table className="mb-6" aria-label="My Referrals Table">
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn key={column.key}>{column.label}</TableColumn>
+          )}
+        </TableHeader>
+        <TableBody emptyContent={"No referrals to display."} items={rows}>
+          {(item) => (
+            <TableRow key={item.key}>
+              {(columnKey) => (
+                <TableCell>
+                  {renderCell(item, columnKey as keyof Referral)}
+                </TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+    </div>
   );
 };
 
