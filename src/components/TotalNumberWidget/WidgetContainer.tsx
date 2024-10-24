@@ -4,7 +4,7 @@ import { TotalNumberWidget } from "./TotalNumberWidget";
 export const WidgetContainer = () => {
   return (
     <>
-      <div className="flex space-x-4 my-4">
+      <div className="flex space-x-4 my-4 bg-gray-100 p-8 rounded-large justify-evenly mb-8">
         <TotalNumberWidget
           icon={<Gem size="3em" />}
           label="Total Points"
