@@ -23,8 +23,9 @@ export const RewardsContainer = () => {
       {data && !loading ? (
         <>
           <div className="grid grid-cols-4 gap-5 gap-y-12">
-            {data.map(({ name, points, imageUrl }: Item) => (
+            {data.map(({ id, name, points, imageUrl }: Item) => (
               <RewardItem
+                key={id}
                 name={name}
                 points={points}
                 image={imageUrl}
@@ -37,6 +38,7 @@ export const RewardsContainer = () => {
           <div className="grid grid-cols-4 gap-5 mt-5">
             {conversion.map(({ name, points, image }) => (
               <RewardItem
+                key={name}
                 name={name}
                 points={points}
                 image={image}
@@ -46,7 +48,9 @@ export const RewardsContainer = () => {
           </div>
         </>
       ) : (
-        <div className="flex justify-center"><Spinner label="Loading..." /></div>
+        <div className="flex justify-center">
+          <Spinner label="Loading..." />
+        </div>
       )}
 
       <ConfirmationModal

@@ -1,7 +1,7 @@
-import { Toaster } from "sonner";
 import AppContent from "./AppContent";
 import { ThemeSwitcher } from "./components/ThemeSwitcher";
 import useDarkMode from "use-dark-mode";
+import { ToastContainer } from "./components/ToastContainer/ToastContainer";
 
 const App = () => {
   const darkMode = useDarkMode(false, {
@@ -21,7 +21,7 @@ const App = () => {
           <ThemeSwitcher isDark={!isDarkMode} onThemeSwitch={onThemeSwitch} />
         </div>
         <AppContent />
-        <Toaster />
+        <ToastContainer />
       </div>
     </main>
   );
